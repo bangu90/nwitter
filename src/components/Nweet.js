@@ -10,7 +10,6 @@ const Nweet = ({ nweetObj, isOwner }) => {
     const ok = window.confirm("Are you sure you want to delete this nweet?");
     if (ok) {
       await dbService.doc(`nweets/${nweetObj.id}`).delete();
-      //URL 삭제 하는 방법 (이미지를 URL로 받고 있어서 이렇게 지움)
       await storageService.refFromURL(nweetObj.attachmentUrl).delete();
     }
   };
@@ -33,14 +32,20 @@ const Nweet = ({ nweetObj, isOwner }) => {
       {editing ? (
         <>
           <form onSubmit={onSubmit} className="container nweetEdit">
-          <input type="text" placeholder="Edit your nweet" value={newNweet} required autoFocus
-              onChange={onChange} className="formInput"
+            <input
+              type="text"
+              placeholder="Edit your nweet"
+              value={newNweet}
+              required
+              autoFocus
+              onChange={onChange}
+              className="formInput"
             />
             <input type="submit" value="Update Nweet" className="formBtn" />
           </form>
           <span onClick={toggleEditing} className="formBtn cancelBtn">
             Cancel
-          </span>       
+          </span>
         </>
       ) : (
         <>
@@ -48,12 +53,12 @@ const Nweet = ({ nweetObj, isOwner }) => {
           {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} />}
           {isOwner && (
             <div class="nweet__actions">
-            <span onClick={onDeleteClick}>
-              <FontAwesomeIcon icon={faTrash} />
-            </span>
-            <span onClick={toggleEditing}>
-              <FontAwesomeIcon icon={faPencilAlt} />
-            </span>
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
             </div>
           )}
         </>
@@ -61,4 +66,5 @@ const Nweet = ({ nweetObj, isOwner }) => {
     </div>
   );
 };
+
 export default Nweet;
